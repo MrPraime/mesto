@@ -1,0 +1,14 @@
+.popup__content {
+	display: flex;
+	flex-direction: column;
+	background: #FFFFFF;
+	width: 430px;
+	height: 330px;
+	border-radius: 10px;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	margin: auto auto;
+}
