@@ -2,13 +2,23 @@
 	display: flex;
 	flex-direction: column;
 	background: #FFFFFF;
-	width: 430px;
+	max-width: 430px;
 	height: 330px;
 	border-radius: 10px;
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	margin: auto auto;
+	margin: 20% auto;
+
+}
+
+@media screen and (max-width: 768px) {
+	.popup__content {
+		margin: 50% auto;
+	}
+}
+
+
+@media screen and (max-width: 470px) {
+	.popup__content {
+		width: 282px;
+		height: 322px;
+	}
 }

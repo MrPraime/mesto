@@ -7,3 +7,15 @@
 	margin-bottom: 30px;
 	outline: 0;
 }
+
+@media screen and (max-width: 768px) {
+	.popup__name {
+		max-width: 580px;
+	}
+}
+
+@media screen and (max-width: 470px) {
+	.popup__name {
+		width: 238px;
+	}
+}

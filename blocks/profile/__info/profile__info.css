@@ -4,6 +4,7 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	max-width: 336px;
+	width: 100%;
 }
 
 @media screen and (max-width: 768px) {
@@ -20,5 +21,6 @@
 	.profile__info {
 		padding-top: 22.5px;
 		justify-content: center;
+		max-width: 282px;
 	}
 }
