@@ -23,8 +23,8 @@ function Profile(event) {
 Profile()
 
 let formElement = document.querySelector('.popup__form'); 
-let nameInput = document.querySelector('.popup__name'); 
-let jobInput = document.querySelector('.popup__about');
+let nameInput = document.querySelector('.popup__input_type_name'); 
+let jobInput = document.querySelector('.popup__input_type_about');
 
 function Open () {
 	nameInput.value = document.querySelector('profile__title');
