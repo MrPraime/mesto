@@ -20,7 +20,6 @@
 @media screen and (max-width: 470px) {
 	.profile__info {
 		padding-top: 22.5px;
-		justify-content: center;
 		max-width: 282px;
 	}
 }

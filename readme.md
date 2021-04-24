@@ -20,3 +20,7 @@
 ## GitHub pages
 
 https://mrpraime.github.io/mesto/
+
+## Планы дороботки проекта
+
+1. Исправления замечания ревьюера

@@ -8,11 +8,13 @@
 	font-weight: normal;
 	font-size: 18px;
 	line-height: 22px;
+	margin-bottom: 37px;
+	transition: opacity .2s;
+	padding: 0;
 }
 
 .popup__save-button:hover {
-	opacity: 0.6;
-	transition: opacity .2s;
+	opacity: 0.8;
 	cursor: pointer;
 }
 
@@ -28,5 +30,7 @@
 		height: 46px;
 		font-size: 14px;
 		line-height: 17px;
+		margin-bottom: 25px;
+		margin-top: 15px;
 	}
 }
