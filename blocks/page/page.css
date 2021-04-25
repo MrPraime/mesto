@@ -11,3 +11,9 @@
 	text-rendering: optimizeLegibility;
 	padding: 0 15px;
 }
+
+@media screen and (max-width: 470px) {
+	.page {
+		padding: 0;
+	}
+}
