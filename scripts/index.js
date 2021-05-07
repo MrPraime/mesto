@@ -16,7 +16,6 @@ const elements = document.querySelector('.elements');
 const createButton = document.querySelector('.popup__create-button');
 const likeButton = document.querySelector('.element__like-button');
 const cardTemplate = document.querySelector('#cards').content;
-const deleteButton = document.querySelector('.element__delete-button');
 const imageCloseButton = document.querySelector(".popup__close-button_modal");
 const titleCard = document.querySelector('.popup__input_type_title');
 const url = document.querySelector('.popup__input_type_url');
@@ -56,7 +55,7 @@ const initialCards = [
 	elements.prepend(cardElement);
   });
 
-/* Функции добавления новой карточки*/
+/* Функции создания новой карточки */
 
 function loadCard(imageValue, textValue) {
 	const cardElement = document.querySelector('.element').cloneNode(true);
@@ -64,20 +63,23 @@ function loadCard(imageValue, textValue) {
 	cardElement.querySelector('.element__image').src = imageValue;
 	cardElement.querySelector('.element__text').textContent = textValue;
 	
+	
 	elements.prepend(cardElement);
 
-	/* лайк на новой карточке */
-	document.querySelector('.element__like-button').addEventListener('click', function(evt) {
-	evt.target.classList.toggle('element__like-button_active');
-	});
+	document.querySelectorAll('.element__like-button').forEach(function(evt){
+		evt.addEventListener('click', like);
+	 });
+	
+	document.querySelectorAll('.element__delete-button').forEach(function(evt){
+		evt.addEventListener('click', del);
+	 });
 
-	/* удаление новой карточки*/
-	const deleteButton = document.querySelector('.element__delete-button');
-	deleteButton.addEventListener('click', function(e) {
-	e.target.closest('.element').remove();
-   });
+	document.querySelectorAll('.element__image').forEach(function(evt) {
+		evt.addEventListener('click', openImage);
+	});
 }
 
+/* функция добавления новой карточки */
 function load() {
 	loadCard(url.value, titleCard.value);
 	titleCard.value = '';
@@ -125,35 +127,40 @@ const modal = document.querySelector('.popup_modal');
 const img = document.querySelectorAll('.element__image');
 const modalImg = document.querySelector(".popup__image");
 const modalText = document.querySelector(".popup__text");
-const textValue = document.querySelectorAll('.element__text');
 
-img.forEach(function(evt) {	
-	evt.addEventListener('click', function() {
+function openImage (e) {
 		modal.style.display = "block";
 		modalImg.src = this.src;
-		modalText.innerHTML = this.parentElement.querySelector('.element__text').textContent;
-	});
-});
-
+		modalText.textContent = this.parentElement.querySelector('.element__text').textContent;
+	}
 /*Функция закрытия картинки*/
 function closeImage() {
 	modal.style.display = "none";
 }
 
 /*Функция лайков*/
+function like(e) {
+	e.target.classList.toggle('element__like-button_active');
+}
+
+/*Функция удаления карточки */
+function del(e) {
+	e.target.closest('.element').remove();
+}
+
+
+
+document.querySelectorAll('.element__image').forEach(function(evt) {
+	evt.addEventListener('click', openImage);
+});
+
 document.querySelectorAll('.element__like-button').forEach(function(evt){
-	evt.addEventListener('click', function(e) {
-		e.target.classList.toggle('element__like-button_active');
-	});
-});
+	evt.addEventListener('click', like);
+ });
 
-/*Функция удаления карточки*/
 document.querySelectorAll('.element__delete-button').forEach(function(evt){
-	evt.addEventListener('click', function(e) {
-		e.target.closest('.element').remove();
-	});
-});
-
+	evt.addEventListener('click', del);
+ });
 imageCloseButton.addEventListener('click', closeImage);
 createButton.addEventListener('click', load);
 editProfileButton.addEventListener('click', openPopup);
