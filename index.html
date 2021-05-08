@@ -16,18 +16,18 @@
 			<img src="images/profile/image.jpg" alt="Фото аватара" class="profile__avatar">
 				<div class="profile__info">
 					<h1 class="profile__title">Жак-Ив Кусто</h1>
-					<button class="profile__edit-button" type="button"></button>
+					<button class="profile__edit-button" type="submit"></button>
 					<p class="profile__subtitle">Исследователь океана</p>
 				</div>
 				<button class="profile__add-button" type="button"></button>
 			</section>
-			<div class="popup">
+			<div class="popup popup_edit-form">
 				<div class="popup__content">
 					<button class="popup__close-button" type="button"></button>
 					<h2 class="popup__title">Редактировать профиль</h2>
 					<form action="#" class="popup__form" name="form">
-						<input type="text" class="popup__input popup__input_type_name" name="name" value="">
-						<input type="text" class="popup__input popup__input_type_about" name="about" value="">
+						<input type="text" class="popup__input popup__input_type_name" name="name" value="" placeholder="Жак-Ив Кусто"  required value="">
+						<input type="text" class="popup__input popup__input_type_about" name="about" value="" placeholder="Исследователь океана" required value="">
 						<button type="submit" class="popup__save-button">Сохранить</button>
 					</form>
 				</div>
@@ -36,9 +36,9 @@
 				<div class="popup__content">
 					<button class="popup__close-button popup__close-button-new" type="button"></button>
 					<h2 class="popup__title">Новое место</h2>
-					<form action="#" class="popup__form" name="form">
-						<input type="text" class="popup__input popup__input_type_title" name="name" value="" placeholder="Название">
-						<input type="text" class="popup__input popup__input_type_url" name="about" value="" placeholder="Ссылка на картинку">
+					<form action="#" class="popup__form" name="new-item-form">
+						<input type="text" class="popup__input popup__input_type_title" name="title" required value="" placeholder="Название">
+						<input type="url" class="popup__input popup__input_type_url" name="image-url" required placeholder="Ссылка на картинку">
 						<button type="button" class="popup__save-button popup__create-button">Создать</button>
 					</form>
 				</div>
@@ -46,7 +46,7 @@
 			<div class="popup popup_modal">
 				<div class="popup__content popup__content_modal">
 					<button class="popup__close-button popup__close-button_modal" type="button"></button>
-					<img class="popup__image">
+					<img class="popup__image" src="#" alt="#">
 					<h2 class="popup__text"></h2>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 	<template id="cards">
 		<div class="element">
 			<button class="element__delete-button" type="button"></button>
-			<img src="#" alt="" class="element__image">
+			<img src="#" alt="#" class="element__image">
 			<div class="element__bar">
 				<h3 class="element__text"></h3>
 				<button class="element__like-button" type="button"></button>

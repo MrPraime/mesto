@@ -1,14 +1,13 @@
-let openPopupButton = document.querySelector('.profile__edit-button');
-let popup = document.querySelector('.popup');
-let closePopupButton = document.querySelector('.popup__close-button');
-let editProfileButton = document.querySelector('.profile__edit-button');
-let formElement = document.querySelector('.popup__form'); 
-let nameInput = document.querySelector('.popup__input_type_name'); 
-let jobInput = document.querySelector('.popup__input_type_about');
-let profileName = document.querySelector('.popup__form').elements.name;
-let about = document.querySelector('.popup__form').elements.about;
-let title = document.querySelector('.profile__title');
-let subtitle = document.querySelector('.profile__subtitle');
+const popupProfile = document.querySelector('.popup_edit-form');
+const closePopupButton = document.querySelector('.popup__close-button');
+const editProfileButton = document.querySelector('.profile__edit-button');
+const formElement = document.querySelector('.popup__form'); 
+const nameInput = document.querySelector('.popup__input_type_name'); 
+const jobInput = document.querySelector('.popup__input_type_about');
+const profileName = popupProfile.querySelector('.popup__form').elements.name;
+const about = popupProfile.querySelector('.popup__form').elements.about;
+const title = document.querySelector('.profile__title');
+const subtitle = document.querySelector('.profile__subtitle');
 const addButton = document.querySelector('.profile__add-button');
 const popUpNew = document.querySelector('.popup_new-item-form');
 const closePopupButtonNew = document.querySelector('.popup__close-button-new');
@@ -17,8 +16,11 @@ const createButton = document.querySelector('.popup__create-button');
 const likeButton = document.querySelector('.element__like-button');
 const cardTemplate = document.querySelector('#cards').content;
 const imageCloseButton = document.querySelector(".popup__close-button_modal");
-const titleCard = document.querySelector('.popup__input_type_title');
-const url = document.querySelector('.popup__input_type_url');
+const modal = document.querySelector('.popup_modal');
+const modalImg = document.querySelector(".popup__image");
+const modalText = document.querySelector(".popup__text");
+const titleImput = document.querySelector('.popup__input_type_title');
+const urlImput = document.querySelector('.popup__input_type_url');
 const initialCards = [
 	{
 	  name: 'Архыз',
@@ -45,97 +47,73 @@ const initialCards = [
 	  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
 	}
   ]; 
-/* функция загрузка карточек из массива*/
-  initialCards.forEach(function(cards) {
-	const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
+/* функция обработки инпутов */
+  function imput() {
+	const elementImg = document.querySelector('.element__image');
+	const imputTitleValue = titleImput.value;
+	const inputUrl = urlImput.value
+	document.querySelector('.element__text').textContent = imputTitleValue;
+	elementImg.src = inputUrl;
+}
+/* функция создания карточки */
+  function createCard(cards) {
+	const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 	cardElement.querySelector('.element__image').src = cards.link;
 	cardElement.querySelector('.element__text').textContent = cards.name;
+	cardElement.querySelector('.element__text').alt = cards.name;
 
-	elements.prepend(cardElement);
+	cardElement.querySelector('.element__like-button').addEventListener('click', like);
+	cardElement.querySelector('.element__delete-button').addEventListener('click', del);
+	cardElement.querySelector('.element__image').addEventListener('click', function() {
+		modalImg.src = this.src;
+		modalImg.alt = this.parentElement.querySelector('.element__text').textContent;
+		modalText.textContent = this.parentElement.querySelector('.element__text').textContent;
+		openPopup(modal)});
+		
+	return cardElement;
+}
+
+/* функция загрузка созданных карточек из массива*/
+
+  initialCards.forEach(function(cards) {
+	elements.prepend(createCard(cards));
   });
+
 
 /* Функции создания новой карточки */
 
-function loadCard(imageValue, textValue) {
-	const cardElement = document.querySelector('.element').cloneNode(true);
-
-	cardElement.querySelector('.element__image').src = imageValue;
-	cardElement.querySelector('.element__text').textContent = textValue;
-	
-	
-	elements.prepend(cardElement);
-
-	document.querySelectorAll('.element__like-button').forEach(function(evt){
-		evt.addEventListener('click', like);
-	 });
-	
-	document.querySelectorAll('.element__delete-button').forEach(function(evt){
-		evt.addEventListener('click', del);
-	 });
-
-	document.querySelectorAll('.element__image').forEach(function(evt) {
-		evt.addEventListener('click', openImage);
-	});
+function loadCard() {
+	elements.prepend(createCard(cards));
+	imput();
+	closePopup(popUpNew);
+	titleImput.value = "";
+	urlImput.value = "";
 }
 
-/* функция добавления новой карточки */
-function load() {
-	loadCard(url.value, titleCard.value);
-	titleCard.value = '';
-	url.value = '';
-	closePopupNew()
+/* функция открытия попАпа*/
+
+function openPopup(e) {
+	e.classList.add('popup_is-opened');
 }
 
-/*Функция открытия попапа со значениями передаваемыми из profile__title  */
-function openPopup() {
-	popup.classList.add('popup_is-opened');
-	profileName.value = title.textContent;
-	about.value = subtitle.textContent;
-}
-/*Функция закрытия*/
+/* функция закрытия попАпа*/
 
-function closePopup() {
-	popup.classList.remove('popup_is-opened');
-}
-
-/* Функции открытия и закрытия нового попапа*/
-
-function openPopupNew() {
-	popUpNew.classList.add('popup_is-opened');
-}
-
-function closePopupNew() {
-	popUpNew.classList.remove('popup_is-opened');
+function closePopup(e) {
+	e.classList.remove('popup_is-opened');
 }
 
 /*Функция внесения новых значений из инпутов*/
-function formSubmitHandler(evt) {
+function handleProfileFormSubmit(evt) {
     evt.preventDefault();
 	
-	let name = nameInput.value
-	let job = jobInput.value;
+	const name = nameInput.value;
+	const job = jobInput.value;
 	
 	title.textContent = name;
 	subtitle.textContent = job;
 	
-	closePopup()
-}
-
-/* Функция открытия картинки */
-const modal = document.querySelector('.popup_modal');
-const img = document.querySelectorAll('.element__image');
-const modalImg = document.querySelector(".popup__image");
-const modalText = document.querySelector(".popup__text");
-
-function openImage (e) {
-		modal.style.display = "block";
-		modalImg.src = this.src;
-		modalText.textContent = this.parentElement.querySelector('.element__text').textContent;
-	}
-/*Функция закрытия картинки*/
-function closeImage() {
-	modal.style.display = "none";
+	closePopup(popupProfile)
 }
 
 /*Функция лайков*/
@@ -148,24 +126,15 @@ function del(e) {
 	e.target.closest('.element').remove();
 }
 
+editProfileButton.addEventListener('click', function() {
+	profileName.value = title.textContent;
+	about.value = subtitle.textContent;
+	openPopup(popupProfile)});
+addButton.addEventListener('click', function() {openPopup(popUpNew)} );
+closePopupButton.addEventListener('click',  function() {closePopup(popupProfile) });
+closePopupButtonNew.addEventListener('click', function() {closePopup(popUpNew)});
+imageCloseButton.addEventListener('click', function() {closePopup(modal)});
+createButton.addEventListener('click', loadCard);
+formElement.addEventListener('submit', handleProfileFormSubmit);
 
-
-document.querySelectorAll('.element__image').forEach(function(evt) {
-	evt.addEventListener('click', openImage);
-});
-
-document.querySelectorAll('.element__like-button').forEach(function(evt){
-	evt.addEventListener('click', like);
- });
-
-document.querySelectorAll('.element__delete-button').forEach(function(evt){
-	evt.addEventListener('click', del);
- });
-imageCloseButton.addEventListener('click', closeImage);
-createButton.addEventListener('click', load);
-editProfileButton.addEventListener('click', openPopup);
-formElement.addEventListener('submit', formSubmitHandler);
-closePopupButton.addEventListener('click', closePopup);
-addButton.addEventListener('click', openPopupNew);
-closePopupButtonNew.addEventListener('click', closePopupNew);
 
