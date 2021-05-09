@@ -1,7 +1,7 @@
 const popupProfile = document.querySelector('.popup_edit-form');
-const closePopupButton = document.querySelector('.popup__close-button');
+const closePopupProfileButton = document.querySelector('.popup__close-button-profile');
 const editProfileButton = document.querySelector('.profile__edit-button');
-const formElement = document.querySelector('.popup__form'); 
+const formProfileElement = document.querySelector('.popup__form-profile'); 
 const nameInput = document.querySelector('.popup__input_type_name'); 
 const jobInput = document.querySelector('.popup__input_type_about');
 const profileName = popupProfile.querySelector('.popup__form').elements.name;
@@ -21,6 +21,7 @@ const modalImg = document.querySelector(".popup__image");
 const modalText = document.querySelector(".popup__text");
 const titleImput = document.querySelector('.popup__input_type_title');
 const urlImput = document.querySelector('.popup__input_type_url');
+const formNewCard = document.querySelector('.popup__form_new_card');
 const initialCards = [
 	{
 	  name: 'Архыз',
@@ -45,24 +46,19 @@ const initialCards = [
 	{
 	  name: 'Байкал',
 	  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-	}
+	},
+	
   ]; 
 
-/* функция обработки инпутов */
-  function imput() {
-	const elementImg = document.querySelector('.element__image');
-	const imputTitleValue = titleImput.value;
-	const inputUrl = urlImput.value
-	document.querySelector('.element__text').textContent = imputTitleValue;
-	elementImg.src = inputUrl;
-}
 /* функция создания карточки */
   function createCard(cards) {
 	const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+
 	cardElement.querySelector('.element__image').src = cards.link;
 	cardElement.querySelector('.element__text').textContent = cards.name;
-	cardElement.querySelector('.element__text').alt = cards.name;
-
+	cardElement.querySelector('.element__image').alt = cards.name;
+	
+	
 	cardElement.querySelector('.element__like-button').addEventListener('click', like);
 	cardElement.querySelector('.element__delete-button').addEventListener('click', del);
 	cardElement.querySelector('.element__image').addEventListener('click', function() {
@@ -70,7 +66,7 @@ const initialCards = [
 		modalImg.alt = this.parentElement.querySelector('.element__text').textContent;
 		modalText.textContent = this.parentElement.querySelector('.element__text').textContent;
 		openPopup(modal)});
-		
+
 	return cardElement;
 }
 
@@ -83,24 +79,30 @@ const initialCards = [
 
 /* Функции создания новой карточки */
 
-function loadCard() {
-	elements.prepend(createCard(cards));
-	imput();
+function handleNewCardFormSubmit(evt) {
+	evt.preventDefault();
+	const card = { 
+		name: titleImput.value,
+		link: urlImput.value
+	}
+	
+	elements.prepend(createCard(card));
 	closePopup(popUpNew);
+
 	titleImput.value = "";
 	urlImput.value = "";
 }
 
 /* функция открытия попАпа*/
 
-function openPopup(e) {
-	e.classList.add('popup_is-opened');
+function openPopup(popUp) {
+	popUp.classList.add('popup_is-opened');
 }
 
 /* функция закрытия попАпа*/
 
-function closePopup(e) {
-	e.classList.remove('popup_is-opened');
+function closePopup(popUp) {
+	popUp.classList.remove('popup_is-opened');
 }
 
 /*Функция внесения новых значений из инпутов*/
@@ -131,10 +133,10 @@ editProfileButton.addEventListener('click', function() {
 	about.value = subtitle.textContent;
 	openPopup(popupProfile)});
 addButton.addEventListener('click', function() {openPopup(popUpNew)} );
-closePopupButton.addEventListener('click',  function() {closePopup(popupProfile) });
+closePopupProfileButton.addEventListener('click',  function() {closePopup(popupProfile) });
 closePopupButtonNew.addEventListener('click', function() {closePopup(popUpNew)});
 imageCloseButton.addEventListener('click', function() {closePopup(modal)});
-createButton.addEventListener('click', loadCard);
-formElement.addEventListener('submit', handleProfileFormSubmit);
+formNewCard.addEventListener('submit', handleNewCardFormSubmit);
+formProfileElement.addEventListener('submit', handleProfileFormSubmit);
 
 
