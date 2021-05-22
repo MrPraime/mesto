@@ -33,7 +33,6 @@ function toggleButtonState (inputList, buttonElement) {
   const {inactiveButtonClass} = config;
 
   if (hasInvalidInput(inputList)) {
-    
     buttonElement.disabled = true;
     buttonElement.classList.add(inactiveButtonClass);
   } else {
@@ -41,6 +40,7 @@ function toggleButtonState (inputList, buttonElement) {
     buttonElement.classList.remove(inactiveButtonClass);
   }
 }
+
  
 const setEventListeners = (formElement, config) => {
   const {inputSelector, submitButtonSelector, ...restConfig} = config;
@@ -62,7 +62,6 @@ function hasInvalidInput (inputList) {
     return !inputElement.validity.valid;
   });
 }
-
 
 
 const enableValidation = (config) => {

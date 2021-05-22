@@ -25,6 +25,8 @@ const urlImput = document.querySelector('.popup__input_type_url');
 const formNewCard = document.querySelector('.popup__form_new_card');
 const popupCloseBtn = document.querySelector('.popup__close-button')
 const popupList =  Array.from(document.querySelectorAll('.popup'));
+const submitCreateButton = document.querySelector('.popup__create-button');
+
 
 const initialCards = [
 	{
@@ -99,11 +101,13 @@ function handleNewCardFormSubmit(evt) {
 
 }
 
+
 /* функция открытия попАпа*/
 function openPopup(popUp) {
 	popUp.classList.add('popup_is-opened');
 	document.addEventListener('keyup', HandlerkeyEsc);
-	
+	submitCreateButton.disabled = true;
+	submitCreateButton.classList.add('popup__save-button_inactive');
 }
 
 
@@ -165,14 +169,18 @@ editProfileButton.addEventListener('click', function() {
 	profileName.value = title.textContent;
 	about.value = subtitle.textContent;
 	openPopup(popupProfile)});
-addButton.addEventListener('click', function() {openPopup(popUpNew)} );
+
+
+	
+addButton.addEventListener('click', function() {
+	  openPopup(popUpNew);
+});
 closePopupProfileButton.addEventListener('click',  function() {closePopup(popupProfile) });
-closePopupButtonNew.addEventListener('click', function() {closePopup(popUpNew)});
+closePopupButtonNew.addEventListener('click', function() 
+{closePopup(popUpNew)});
 imageCloseButton.addEventListener('click', function() {closePopup(modal)});
 formNewCard.addEventListener('submit', handleNewCardFormSubmit);
 formProfileElement.addEventListener('submit', handleProfileFormSubmit);
-
-
 
 
 const config = {
