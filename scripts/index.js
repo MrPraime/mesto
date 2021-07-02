@@ -1,3 +1,7 @@
+import { FormValidator } from "./FormValidator.js";
+import { Card } from "./Card.js";
+
+
 const popupProfile = document.querySelector('.popup_edit-form');
 const popUp = document.querySelector('.popup');
 const closePopupProfileButton = document.querySelector('.popup__close-button-profile');
@@ -56,65 +60,73 @@ const initialCards = [
 	
   ]; 
 
-/* функция создания карточки */
-  function createCard(cards) {
-	const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
 
-	cardElement.querySelector('.element__image').src = cards.link;
-	cardElement.querySelector('.element__text').textContent = cards.name;
-	cardElement.querySelector('.element__image').alt = cards.name;
+initialCards.forEach((item) => {
+	// Создадим экземпляр карточки
+	const card = new Card(item, '.card-template');
+	// Создаём карточку и возвращаем наружу
+	const cardElement = card.generateCard();
+  
+	// Добавляем в DOM
+	elements.append(cardElement);
+  }); 
+
+
+  class NewCard extends Card {
+	constructor(data, cardSelector) {
+		super(cardSelector);
+		this.name = data.name;
+		this.link = data.link;
+		this.alt = data.name;
+		this._cardSelector = cardSelector;
+		}
+
+		generateCard() {
+			this._element = this._getTemplate();
 	
+			this._element.querySelector('.element__image').src = urlImput.value;
+			this._element.querySelector('.element__text').textContent = titleImput.value;
+			this._element.querySelector('.element__image').alt = titleImput.value;
+			this._setEventListeners();
 	
-	cardElement.querySelector('.element__like-button').addEventListener('click', like);
-	cardElement.querySelector('.element__delete-button').addEventListener('click', del);
-	cardElement.querySelector('.element__image').addEventListener('click', function() {
-		modalImg.src = this.src;
-		modalImg.alt = this.parentElement.querySelector('.element__text').textContent;
-		modalText.textContent = this.parentElement.querySelector('.element__text').textContent;
-		openPopup(modal)
-	});
-
-	return cardElement;
-}
-
-/* функция загрузка созданных карточек из массива*/
-
-  initialCards.forEach(function(cards) {
-	elements.prepend(createCard(cards));
-  });
-
+			return this._element;
+		}
+  }
 
 /* Функции создания новой карточки */
 
 function handleNewCardFormSubmit(evt) {
 	evt.preventDefault();
-	const card = { 
-		name: titleImput.value,
-		link: urlImput.value
-	}
+
+	// Создадим экземпляр карточки
+	const newCard = new NewCard(evt, '.card-template');
+	// Создаём карточку и возвращаем наружу
+	const cardElement = newCard.generateCard();
 	
-	elements.prepend(createCard(card));
+	elements.prepend(cardElement); 
 	closePopup(popUpNew);
 
 	titleImput.value = "";
 	urlImput.value = "";
-
 }
 
 
 /* функция открытия попАпа*/
 function openPopup(popUp) {
 	popUp.classList.add('popup_is-opened');
-	document.addEventListener('keyup', HandlerkeyEsc);
+	document.addEventListener('keyup', handlerKeyEsc);
 	submitCreateButton.disabled = true;
 	submitCreateButton.classList.add('popup__save-button_inactive');
+	
 }
 
 
 /* функция закрытия попАпа*/
 function closePopup(popUp) {
 	popUp.classList.remove('popup_is-opened');
-	document.removeEventListener('keyup', HandlerkeyEsc);
+	document.removeEventListener('keyup', handlerKeyEsc);
+	document.forms["newItemForm"].reset();
+	document.forms["profileForm"].reset();
 }
 
 /*Функция внесения новых значений из инпуто  в*/
@@ -130,19 +142,9 @@ function handleProfileFormSubmit(evt) {
 	closePopup(popupProfile)
 }
 
-/*Функция лайков*/
-function like(e) {
-	e.target.classList.toggle('element__like-button_active');
-}
-
-/*Функция удаления карточки */
-function del(e) {
-	e.target.closest('.element').remove();
-}
-
 /*Функция закрытия попапа esc */
 
-function HandlerkeyEsc(evt) {
+function handlerKeyEsc(evt) {
 	if (evt.key === "Escape") {
 		const popupActive = document.querySelector('.popup_is-opened')
 		closePopup(popupActive);
@@ -183,6 +185,9 @@ formNewCard.addEventListener('submit', handleNewCardFormSubmit);
 formProfileElement.addEventListener('submit', handleProfileFormSubmit);
 
 
+const formAdd = document.forms.newItemForm;
+const formProfile = document.forms.profileForm;
+
 const config = {
 	formSelector: '.popup__form',
 	inputSelector: '.popup__input',
@@ -192,4 +197,9 @@ const config = {
 	errorClass: 'popup__input-error_active',
 }
 
-enableValidation(config);
+const addFormValidator  = new FormValidator (config, formAdd);
+const editProfileFormValidator  = new FormValidator (config, formProfile);
+
+addFormValidator.enableValidation();
+editProfileFormValidator.enableValidation();
+
