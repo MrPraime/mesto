@@ -1,6 +1,8 @@
 import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
 
+export {openPopup};
+
 
 const popupProfile = document.querySelector('.popup_edit-form');
 const popUp = document.querySelector('.popup');
@@ -22,8 +24,6 @@ const likeButton = document.querySelector('.element__like-button');
 const cardTemplate = document.querySelector('#cards').content;
 const imageCloseButton = document.querySelector(".popup__close-button_modal");
 const modal = document.querySelector('.popup_modal');
-const modalImg = document.querySelector(".popup__image");
-const modalText = document.querySelector(".popup__text");
 const titleImput = document.querySelector('.popup__input_type_title');
 const urlImput = document.querySelector('.popup__input_type_url');
 const formNewCard = document.querySelector('.popup__form_new_card');
@@ -63,7 +63,7 @@ const initialCards = [
 
 initialCards.forEach((item) => {
 	// Создадим экземпляр карточки
-	const card = new Card(item, '.card-template');
+	const card = new Card(item.name, item.link, '.card_template');
 	// Создаём карточку и возвращаем наружу
 	const cardElement = card.generateCard();
   
@@ -110,19 +110,22 @@ function handleNewCardFormSubmit(evt) {
 	urlImput.value = "";
 }
 
+function handleSubmitBtnDisabled() {
+	submitCreateButton.disabled = true;
+	submitCreateButton.classList.add('popup__save-button_inactive');
+}
 
 /* функция открытия попАпа*/
 function openPopup(popUp) {
 	popUp.classList.add('popup_is-opened');
 	document.addEventListener('keyup', handlerKeyEsc);
-	submitCreateButton.disabled = true;
-	submitCreateButton.classList.add('popup__save-button_inactive');
-	
+	handleSubmitBtnDisabled()
 }
 
 
+
 /* функция закрытия попАпа*/
-function closePopup(popUp) {
+ function closePopup(popUp) {
 	popUp.classList.remove('popup_is-opened');
 	document.removeEventListener('keyup', handlerKeyEsc);
 	document.forms["newItemForm"].reset();

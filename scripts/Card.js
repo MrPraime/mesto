@@ -1,3 +1,5 @@
+import { openPopup } from "./index.js";
+
 export class Card {
 	constructor(data, cardSelector) {
 	this.name = data.name;
@@ -21,7 +23,7 @@ export class Card {
 		this._element = this._getTemplate();
 		this._element.querySelector('.element__image').src = this.link;
 		this._element.querySelector('.element__text').textContent = this.name;
-		this._element.querySelector('.element__image').alt = this.name;
+		this._element.alt = this.name;
 		this._setEventListeners();
 
 		return this._element;
@@ -38,9 +40,13 @@ export class Card {
 		});
 
 		this._element.querySelector('.element__image').addEventListener('click', () => {
+			const modal = document.querySelector('.popup_modal');
+			const modalImg = document.querySelector(".popup__image");
+			const modalText = document.querySelector(".popup__text");
+
 			modalImg.src = this._element.querySelector('.element__image').src;
 			modalImg.alt = this._element.querySelector('.element__text').textContent;
-			modalText.textContent = this._element.querySelector('.element__text').textContent;
+			modalText.textContent = this._element.textContent;
 			
 			openPopup(modal);
 		});
@@ -58,3 +64,4 @@ export class Card {
 
 	
 }
+
