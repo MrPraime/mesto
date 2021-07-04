@@ -31,7 +31,6 @@ const popupCloseBtn = document.querySelector('.popup__close-button')
 const popupList =  Array.from(document.querySelectorAll('.popup'));
 const submitCreateButton = document.querySelector('.popup__create-button');
 
-
 const initialCards = [
 	{
 	  name: 'Архыз',
@@ -63,7 +62,7 @@ const initialCards = [
 
 initialCards.forEach((item) => {
 	// Создадим экземпляр карточки
-	const card = new Card(item.name, item.link, '.card_template');
+	const card = new Card(item,'.card-template');
 	// Создаём карточку и возвращаем наружу
 	const cardElement = card.generateCard();
   
@@ -72,6 +71,8 @@ initialCards.forEach((item) => {
   }); 
 
 
+
+/* Функции создания новой карточки */
   class NewCard extends Card {
 	constructor(data, cardSelector) {
 		super(cardSelector);
@@ -93,7 +94,31 @@ initialCards.forEach((item) => {
 		}
   }
 
-/* Функции создания новой карточки */
+/* Функции состояние кнопки сабмита */
+
+function handleSubmitBtnDisabled() {
+	submitCreateButton.disabled = true;
+	submitCreateButton.classList.add('popup__save-button_inactive');
+}
+
+
+/* функция открытия попАпа*/
+function openPopup(popUp) {
+	popUp.classList.add('popup_is-opened');
+	document.addEventListener('keyup', handlerKeyEsc);
+	handleSubmitBtnDisabled()
+}
+
+
+/* функция закрытия попАпа*/
+ function closePopup(popUp) {
+	popUp.classList.remove('popup_is-opened');
+	document.removeEventListener('keyup', handlerKeyEsc);
+	document.forms["newItemForm"].reset();
+	document.forms["profileForm"].reset();
+}
+
+/* Функции добавления новой карточки */
 
 function handleNewCardFormSubmit(evt) {
 	evt.preventDefault();
@@ -110,29 +135,8 @@ function handleNewCardFormSubmit(evt) {
 	urlImput.value = "";
 }
 
-function handleSubmitBtnDisabled() {
-	submitCreateButton.disabled = true;
-	submitCreateButton.classList.add('popup__save-button_inactive');
-}
 
-/* функция открытия попАпа*/
-function openPopup(popUp) {
-	popUp.classList.add('popup_is-opened');
-	document.addEventListener('keyup', handlerKeyEsc);
-	handleSubmitBtnDisabled()
-}
-
-
-
-/* функция закрытия попАпа*/
- function closePopup(popUp) {
-	popUp.classList.remove('popup_is-opened');
-	document.removeEventListener('keyup', handlerKeyEsc);
-	document.forms["newItemForm"].reset();
-	document.forms["profileForm"].reset();
-}
-
-/*Функция внесения новых значений из инпуто  в*/
+/*Функция внесения новых значений из инпутов*/
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
 	
@@ -205,4 +209,5 @@ const editProfileFormValidator  = new FormValidator (config, formProfile);
 
 addFormValidator.enableValidation();
 editProfileFormValidator.enableValidation();
+
 

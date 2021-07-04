@@ -31,6 +31,7 @@ export class FormValidator {
         this._showInputError(inputElement, inputElement.validationMessage);
       } else {
        this._hideInputError(inputElement);
+       
       }
     };
     
@@ -54,6 +55,7 @@ export class FormValidator {
         });
       });
     };
+
 
     _hasInvalidInput () {
       return this._inputList.some((formElement) => {
