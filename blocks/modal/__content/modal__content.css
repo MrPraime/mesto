@@ -6,7 +6,7 @@
     width: 100%;
     height: 100%;
     max-width: 75vh;
-	animation: opacity 0.9s forwards;
+	  animation: opacity 0.9s forwards;
 }
 
 @keyframes opacity {

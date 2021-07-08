@@ -5,7 +5,6 @@ export {openPopup};
 
 
 const popupProfile = document.querySelector('.popup_edit-form');
-const popUp = document.querySelector('.popup');
 const closePopupProfileButton = document.querySelector('.popup__close-button-profile');
 const editProfileButton = document.querySelector('.profile__edit-button');
 const formProfileElement = document.querySelector('.popup__form-profile'); 
@@ -19,15 +18,11 @@ const addButton = document.querySelector('.profile__add-button');
 const popUpNew = document.querySelector('.popup_new-item-form');
 const closePopupButtonNew = document.querySelector('.popup__close-button-new');
 const elements = document.querySelector('.elements');
-const createButton = document.querySelector('.popup__create-button');
-const likeButton = document.querySelector('.element__like-button');
-const cardTemplate = document.querySelector('#cards').content;
 const imageCloseButton = document.querySelector(".popup__close-button_modal");
 const modal = document.querySelector('.popup_modal');
 const titleImput = document.querySelector('.popup__input_type_title');
 const urlImput = document.querySelector('.popup__input_type_url');
 const formNewCard = document.querySelector('.popup__form_new_card');
-const popupCloseBtn = document.querySelector('.popup__close-button')
 const popupList =  Array.from(document.querySelectorAll('.popup'));
 const submitCreateButton = document.querySelector('.popup__create-button');
 
@@ -71,29 +66,6 @@ initialCards.forEach((item) => {
   }); 
 
 
-
-/* Функции создания новой карточки */
-  class NewCard extends Card {
-	constructor(data, cardSelector) {
-		super(cardSelector);
-		this.name = data.name;
-		this.link = data.link;
-		this.alt = data.name;
-		this._cardSelector = cardSelector;
-		}
-
-		generateCard() {
-			this._element = this._getTemplate();
-	
-			this._element.querySelector('.element__image').src = urlImput.value;
-			this._element.querySelector('.element__text').textContent = titleImput.value;
-			this._element.querySelector('.element__image').alt = titleImput.value;
-			this._setEventListeners();
-	
-			return this._element;
-		}
-  }
-
 /* Функции состояние кнопки сабмита */
 
 function handleSubmitBtnDisabled() {
@@ -103,7 +75,7 @@ function handleSubmitBtnDisabled() {
 
 
 /* функция открытия попАпа*/
-function openPopup(popUp) {
+ function openPopup(popUp) {
 	popUp.classList.add('popup_is-opened');
 	document.addEventListener('keyup', handlerKeyEsc);
 	handleSubmitBtnDisabled()
@@ -122,9 +94,15 @@ function openPopup(popUp) {
 
 function handleNewCardFormSubmit(evt) {
 	evt.preventDefault();
+	const newCardUrl = urlImput.value;
+	const newCardTitle = titleImput.value;
+	const NewCardItem = {
+		name: newCardTitle,
+		link: newCardUrl
+	}
 
 	// Создадим экземпляр карточки
-	const newCard = new NewCard(evt, '.card-template');
+	const newCard = new Card(NewCardItem,'.card-template');
 	// Создаём карточку и возвращаем наружу
 	const cardElement = newCard.generateCard();
 	
