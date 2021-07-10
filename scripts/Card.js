@@ -1,11 +1,11 @@
 import { openPopup } from "./index.js";
 
 export class Card {
-	constructor(data, cardSelector) {
-	this.name = data.name;
-	this.link = data.link;
-	this.alt = data.name;
-	this._cardSelector = cardSelector;
+		constructor(data, cardSelector) {
+			this.name = data.name;
+			this.link = data.link;
+			this.alt = data.name;
+			this._cardSelector = cardSelector;
 	}
 
 	_getTemplate() {
