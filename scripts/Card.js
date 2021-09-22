@@ -1,12 +1,16 @@
-import { openPopup } from "./index.js";
+// import { openPopup } from "./index.js";
 
 export class Card {
-		constructor(data, cardSelector) {
+		constructor({data, handleCardClick}, cardSelector) {
 			this.name = data.name;
 			this.link = data.link;
 			this.alt = data.name;
 			this._cardSelector = cardSelector;
+			this._handleCardClick = handleCardClick;
 	}
+
+
+	
 
 	_getTemplate() {
 		const cardElement = document
@@ -39,20 +43,15 @@ export class Card {
 			this._handleDelCard();
 		});
 
-		this._element.querySelector('.element__image').addEventListener('click', () => {
-			const modal = document.querySelector('.popup_modal');
-			const modalImg = document.querySelector(".popup__image");
-			const modalText = document.querySelector(".popup__text");
+		this._element.querySelector('.element__image').addEventListener('click', () =>  this._handleOpenImgage(this.link, this.name) );
+}
 
-			modalImg.src = this._element.querySelector('.element__image').src;
-			modalImg.alt = this._element.querySelector('.element__text').textContent;
-			modalText.textContent = this._element.textContent;
-			
-			openPopup(modal);
-		});
+	_handleOpenImgage(){ 
+		const image = this._element.querySelector('.element__image');
+		const title = this._element.querySelector('.element__text')
+
+	    this._handleCardClick({name: this._name, link: this._link});
 	}
-
-
 
 	_handleLikeCard() { 
 		this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
