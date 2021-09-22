@@ -90,7 +90,56 @@ export function handleSubmitBtnDisabled() {
 	submitCreateButton.classList.add('popup__save-button_inactive');
 }
 
+/* Функции добавления новой карточки */
 
+// function handleNewCardFormSubmit(evt) {
+// 	evt.preventDefault();
+// 	const newCardUrl = urlImput.value;
+// 	const newCardTitle = titleImput.value;
+// 	const NewCardItem = {
+// 		name: newCardTitle,
+// 		link: newCardUrl
+// 	}
+
+	// // Создадим экземпляр карточки
+	// const newCard = new Card(NewCardItem,'.card-template');
+	// // Создаём карточку и 	возвращаем наружу
+	// const cardElement = newCard.generateCard();
+	
+	// elements.prepend(cardElement); 
+	// close(popUpNew);
+
+	// titleImput.value = "";
+	// urlImput.value = "";
+
+
+
+/*Функция внесения новых значений из инпутов*/
+// function handleProfileFormSubmit(evt) {
+//     evt.preventDefault();
+	
+// 	const name = nameInput.value;
+// 	const job = jobInput.value;
+	
+// 	title.textContent = name;
+// 	subtitle.textContent = job;
+	
+// 	closePopup(popupProfile)
+// }
+
+// const newCardUrl = urlImput.value;
+// const newCardTitle = titleImput.value;
+// const NewCardItem = {
+// 	name: newCardTitle,
+// 	link: newCardUrl
+// }
+
+// const newCard = new Card(NewCardItem,'.card-template');
+// // Создаём карточку и возвращаем наружу
+// const cardElement = newCard.generateCard();
+
+// elements.prepend(cardElement); 
+// close(popUpNew);
 
 const userInfo = new UserInfo({
 	nameSelector: title,
@@ -126,20 +175,42 @@ editProfileButton.addEventListener('click', ()=> {
 
 
 
-
 const openedAddCardForm = new PopupWithForm({ 
 	popUpSelector: addNewCardPopUp,
 	formSelector: formNewCard,
-	handleFormSubmit: (data) => { 
-		const newCard = new Card(data, '.card-template');
+
+	handleFormSubmit:() => { 
+	const newCardUrl = urlImput.value;
+	const newCardTitle = titleImput.value;
+	const NewCardItem = {
+		name: newCardTitle,
+		link: newCardUrl
+	}
+		console.log(NewCardItem);
+		console.log (NewCardItem.name)
+		console.log (NewCardItem.link
+			)
+		const newCard = new Card(NewCardItem, '.card-template');
 		const cardElement = newCard.generateCard();
 		elements.prepend(cardElement); 
-		console.log(data)
     	openedAddCardForm.close();
 }
 });
 
 
+// Работает отсносительно !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// const openedAddCardForm = new PopupWithForm({ 
+// 	popUpSelector: addNewCardPopUp,
+// 	formSelector: formNewCard,
+// 	handleFormSubmit: (data) => { 
+// 		const newCard = new Card(data, '.card-template');
+// 		const cardElement = newCard.generateCard();
+// 		elements.prepend(cardElement); 
+
+//     	openedAddCardForm.close();
+// }
+// });
 
 openedAddCardForm.setEventListeners();
 	
@@ -148,7 +219,11 @@ addButton.addEventListener('click', () => {
 });
 
 
-
+// closePopupButtonNew.addEventListener('click', function() 
+// {closePopup(popUpNew)});
+// imageCloseButton.addEventListener('click', function() {closePopup(modal)});
+// formNewCard.addEventListener('submit', handleNewCardFormSubmit);
+// formProfileElement.addEventListener('submit', handleProfileFormSubmit);
 
 
 const formAdd = document.forms.newItemForm;
