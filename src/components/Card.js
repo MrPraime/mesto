@@ -44,8 +44,8 @@ export class Card {
 }
 
 	_handleOpenImgage(){ 
-		const image = this._element.querySelector('.element__image');
-		const title = this._element.querySelector('.element__text')
+		// const image = this._element.querySelector('.element__image');
+		// const title = this._element.querySelector('.element__text')
 
 	    this._handleCardClick({name: this._name, link: this._link});
 	}

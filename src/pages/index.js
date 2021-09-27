@@ -52,7 +52,7 @@ const initialCards = [
 	},
 	
   ]; 
-
+//   console.log(modal);
 // const cardList = new Section({
 // 	data: initialCards, 
 // 	renderer: (item)=> {
@@ -60,7 +60,7 @@ const initialCards = [
 // 			data: item,
 // 			handleCardClick: () => {
 // 				const openedImage = new PopupWithImage(item, modal);
-// 				console.log(openedImage);
+// 				console.log(item)
 // 				openedImage.setEventListeners()
 // 				openedImage.open();
 // 			}
@@ -73,7 +73,6 @@ const initialCards = [
 //  cardListSelector);
 
 const imagePopup = new PopupWithImage(modal);
-console.log(imagePopup)
 
 const cardList = new Section({
 	data: initialCards, 
