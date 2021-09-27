@@ -52,50 +52,11 @@ const initialCards = [
 	},
 	
   ]; 
-//   console.log(modal);
-// const cardList = new Section({
-// 	data: initialCards, 
-// 	renderer: (item)=> {
-// 		const card = new Card({
-// 			data: item,
-// 			handleCardClick: () => {
-// 				const openedImage = new PopupWithImage(item, modal);
-// 				console.log(item)
-// 				openedImage.setEventListeners()
-// 				openedImage.open();
-// 			}
-// 		}, '.card-template');
-//         const cardElement = card.generateCard();
 
-//         cardList.addItem(cardElement);
-// 	}
-//  }, 
-//  cardListSelector);
+  const formAdd = document.forms.newItemForm;
+  const formProfile = document.forms.profileForm;
 
-const imagePopup = new PopupWithImage(modal);
-
-const cardList = new Section({
-	data: initialCards, 
-	renderer: (item)=> {
-		const card = new Card({
-			data: item,
-			handleCardClick: () => {
-				imagePopup.open(item);			
-			}
-		}, '.card-template');
-        const cardElement = card.generateCard();
-
-        cardList.addItem(cardElement);
-	}
- }, 
- cardListSelector);
- 
-cardList.rendererItem();
-
-
-
-/* Функции редактирования профилья */
-const userInfo = new UserInfo({
+  const userInfo = new UserInfo({
 	nameSelector: title,
 	aboutSelector: subtitle
 });
@@ -108,6 +69,31 @@ const setUserInfo = () => {
 	jobInput.value = userData.about;
   };
 
+
+const imagePopup = new PopupWithImage(modal);
+
+/*Инициализация карточек из js */
+const cardList = new Section({
+	data: initialCards, 
+	renderer: (item)=> {
+		const card = new Card({
+			data: item,
+			handleCardClick: () => {
+				imagePopup.open(item.name, item.link);
+			}
+		}, '.card-template');
+        const cardElement = card.generateCard();
+
+        cardList.addItem(cardElement);
+	}
+ }, 
+ cardListSelector);
+ 
+cardList.rendererItem();
+
+
+/*Открытия попАпа редактирования профиля */
+
 const openedProfileForm = new PopupWithForm({
 	popUpSelector: popupProfile,
 	formSelector: formProfileElement,
@@ -119,15 +105,7 @@ const openedProfileForm = new PopupWithForm({
 });
 
 
-openedProfileForm.setEventListeners();
-
-editProfileButton.addEventListener('click', ()=> {
-	setUserInfo();
-	openedProfileForm.open()
-});
-
-
-/* функция открытия попапа и добавления новой карточки */
+/*Открытия попАпа добавления карточки, с функцией добавления карточки */
 
 const openedAddCardForm = new PopupWithForm({ 
 	popUpSelector: addNewCardPopUp,
@@ -141,11 +119,8 @@ const openedAddCardForm = new PopupWithForm({
 		}
 		const newCard = new Card({data:NewCardItem,
 			handleCardClick: () => {
-				const openedImage = new PopupWithImage(NewCardItem ,modal);
-				openedImage.setEventListeners()
-				openedImage.open();
+				imagePopup.open(NewCardItem.name, NewCardItem.link);
 			}
-		
 		}, '.card-template');
 		const cardElement = newCard.generateCard();
 		elements.prepend(cardElement);
@@ -156,15 +131,21 @@ const openedAddCardForm = new PopupWithForm({
 }
 });
 
+
+
+
+/*Добавление слушателей */
 openedAddCardForm.setEventListeners();
-	
+openedProfileForm.setEventListeners();
+editProfileButton.addEventListener('click', ()=> {
+	setUserInfo();
+	openedProfileForm.open()
+});
 addButton.addEventListener('click', () => {
 	openedAddCardForm.open();
 });
 
 
-const formAdd = document.forms.newItemForm;
-const formProfile = document.forms.profileForm;
 
 export const config = {
 	formSelector: '.popup__form',
