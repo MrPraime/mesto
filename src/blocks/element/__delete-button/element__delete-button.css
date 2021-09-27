@@ -1,5 +1,6 @@
 .element__delete-button {
     background-image: url(../../../images/elements/delete.svg);
+
     width: 18px;
     height: 19.3px;
     transition: opacity .2s;
