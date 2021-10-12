@@ -58,4 +58,4 @@ const formProfile = document.forms.profileForm;
 const formProfileAvatar = document.forms.newAvatar;
 
 export {popupProfile, editProfileButton, formProfileElement, nameInput, jobInput, title, subtitle,addButton, 
-    addNewCardPopUp, elements, modal, titleImput, urlImput, formNewCard, cardListSelector, initialCards, config, formAdd,formProfile, formProfileAvatar,editAvatarButton }
+    addNewCardPopUp, elements, modal, titleImput, urlImput, formNewCard, cardListSelector, initialCards, config, formAdd,formProfile, formProfileAvatar, editAvatarButton }

@@ -160,7 +160,7 @@ editProfileButton.addEventListener('click', ()=> {
 	
 	userInformation();
 	openedProfileForm.open()
-	editProfileFormValidator.resetValidation();
+	addFormValidator.resetValidation();
 });
 
 editAvatarButton.addEventListener('click', ()=> {
