@@ -8,9 +8,8 @@
 	background-size: 22px 22px;
 	background-position: center;
 	padding: 0;
-	margin-right: 20px;
 	align-self: center;
-	width: 100%;
+	width: 22px;
 	transition: opacity .2s;
 }
 

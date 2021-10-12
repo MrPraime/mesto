@@ -1,5 +1,6 @@
 const popupProfile = document.querySelector('.popup_edit-form');
 const editProfileButton = document.querySelector('.profile__edit-button');
+const editAvatarButton = document.querySelector(".profile__edit-button-avatar")
 const formProfileElement = document.querySelector('.popup__form-profile'); 
 const nameInput = document.querySelector('.popup__input_type_name'); 
 const jobInput = document.querySelector('.popup__input_type_about');
@@ -54,6 +55,7 @@ const initialCards = [
 
 const formAdd = document.forms.newItemForm;
 const formProfile = document.forms.profileForm;
+const formProfileAvatar = document.forms.newAvatar;
 
 export {popupProfile, editProfileButton, formProfileElement, nameInput, jobInput, title, subtitle,addButton, 
-    addNewCardPopUp, elements, modal, titleImput, urlImput, formNewCard, cardListSelector, initialCards, config, formAdd,formProfile }
+    addNewCardPopUp, elements, modal, titleImput, urlImput, formNewCard, cardListSelector, initialCards, config, formAdd,formProfile, formProfileAvatar,editAvatarButton }
