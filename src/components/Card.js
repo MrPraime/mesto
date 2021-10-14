@@ -70,6 +70,8 @@ _setLikes(count) {
 
   }
 
+
+
 _setEventListeners() {
 
 	this._element.querySelector('.element__like-button').addEventListener('click',(evt) => {
@@ -84,6 +86,7 @@ _setEventListeners() {
 			this._liked = false;
 			}
 });
+
 
 
 	this._element.querySelector('.element__delete-button').addEventListener('click', (evt) => {
