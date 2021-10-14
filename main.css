@@ -27,7 +27,6 @@
 .popup__image{height:100%;max-height:75vh;max-width:75vh;width:100%}
 .popup__text{color:#fff;display:block;font-size:12px;font-weight:400;line-height:15px;margin:10px 0 0;padding:0}
 .popup__content-del-card{background:#fff;border-radius:10px;box-shadow:0 0 25px rgba(0,0,0,.15);display:flex;flex-direction:column;height:181px;width:430px}@media screen and (max-width:768px){.popup__content{margin:50% auto}}@media screen and (max-width:470px){.popup__content{width:282px}}
-.popup_delCard-title{font-family:Inter;font-size:24px;font-style:normal;font-weight:900;line-height:29px;margin-bottom:8px;margin-left:36px;margin-top:34px}
 .elements{grid-gap:20px 17px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);margin:0 auto;max-width:880px;padding-top:51px;width:100%}@media screen and (max-width:768px){.elements{grid-gap:15px 10px;grid-template-columns:repeat(2,49%);grid-template-rows:repeat(3,1fr);max-width:580px}}@media screen and (max-width:470px){.elements{display:flex;flex-direction:column;width:282px}}
 .element{border-radius:10px;display:flex;flex-direction:column;max-width:282px;position:relative;width:100%}
 .element__image{border-top-left-radius:10px;border-top-right-radius:10px;height:100%;max-height:282px;max-width:282px;width:100%}
