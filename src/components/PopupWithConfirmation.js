@@ -9,7 +9,6 @@ export class PopupWithConfirmation extends Popup {
 
     setSubmitAction(action) {
       this._handleSubmitCallback = action;
-      console.log(action)
     }
   
     setEventListeners() {
