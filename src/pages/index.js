@@ -35,29 +35,6 @@ const api = new Api({
   },
 });
 
-/* Загружаем и отрисовываем карточки с сервера */
-// api.getInitialCards()
-//   .then((data) => {
-//     const cardList = new Section(
-//       {
-//         data: data,
-//         renderer: (item) => {
-//           cardList.addItem(createCard(item));
-//         },
-//       },
-//       cardListSelector
-//     );
-//     cardList.rendererItem();
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//     return [];
-//   })
-//   .finally(() => {});
-
-
-
-
 
 const cardList = new Section({
   items: [],
@@ -83,8 +60,8 @@ const openedProfileForm = new PopupWithForm(
         console.log(err);
         return [];
       })
-      .finally(() => {
-        // handleWaitLoading(openedEditAvatarForm, wait);
+      .finally((wait) => {
+        handleWaitLoading(openedProfileForm, wait)
       });
   }
 );
@@ -95,16 +72,18 @@ const openedAddCardForm = new PopupWithForm(
     api.postNewCard(title, imageUrl, (wait) => {
         handleWaitLoading(openedAddCardForm, wait);
       })
-      .then(
-        (res) => elements.prepend(createCard(res)),
-        addFormValidator.handleSubmitBtnDisabled(),
+      .then((res) => {
+        elements.prepend(createCard(res))
+        addFormValidator.handleSubmitBtnDisabled()
         openedAddCardForm.close()
-      )
+      })
       .catch((err) => {
         console.log(err);
         return [];
       })
-      .finally(() => {});
+      .finally((wait) => {
+        handleWaitLoading(openedEditAvatarForm, wait)
+      });
   }
 );
 
@@ -112,7 +91,7 @@ const openedEditAvatarForm = new PopupWithForm(
   ".popup_edit-avatar",
   ({ newAvatarUrl }) => {
     api.patchNewAvatar(newAvatarUrl, (wait) => {
-        handleWaitLoading(openedEditAvatarForm, wait);
+      handleWaitLoading(openedEditAvatarForm, wait)
       })
       .then(() => {
         userInfoMethods.setUserAvatar(newAvatarUrl);
@@ -122,9 +101,15 @@ const openedEditAvatarForm = new PopupWithForm(
       .catch((err) => {
         console.log(err);
         return [];
+      }).finally((wait) => {
+        handleWaitLoading(openedEditAvatarForm, wait)
       });
   }
 );
+
+
+
+
 
 // /*Функция отображения загрузки */
 function handleWaitLoading(popup, wait) {
@@ -134,87 +119,8 @@ function handleWaitLoading(popup, wait) {
   }
 }
 
+
 // /*Функция создания карточки *
-
-// function createCard(item, myCard = false) {
-//   const cardElement = new Card(
-//     {
-//       data: item,
-//       handleCardClick: () => {
-//         imagePopup.open(item.name, item.link);
-//       },
-//     },
-//     (id, evt) => {
-//       openedConfirmDelCard.open();
-//       openedConfirmDelCard.setSubmitAction(() => {
-//         api.deleteCard(id)
-//           .then(() => {
-//             cardElement.DelCard(evt);
-//             openedConfirmDelCard.close();
-//           })
-//           .catch((err) => {
-//             console.log(err);
-//             return [];
-//           });
-//       });
-//     },
-//     userInfoMethods.getUserInfo().name,
-//     (liked) => {
-//       if (liked) {
-//         api.removeLike(item._id);
-//         return false;
-//       } else {
-//         api.addLike(item._id);
-//         return true;
-//       }
-//     },
-
-//     ".card-template"
-//   );
-//   return cardElement.generateCard(myCard);
-// }
-
-
-
-// function createCard(item, myCard = false) {   работаеттттттттттттттттттттттттттттттттттттттттттт
-//   const cardElement = new Card(
-//     {
-//       data: item,
-//       handleCardClick: () => {
-//         imagePopup.open(item.name, item.link);
-//       },
-//     },
-//     (id, evt) => {
-//       openedConfirmDelCard.open();
-//       openedConfirmDelCard.setSubmitAction(() => {
-//         api.deleteCard(id)
-//           .then(() => {
-//             cardElement.delCard(evt);
-//             openedConfirmDelCard.close();
-//           })
-//           .catch((err) => {
-//             console.log(err);
-//             return [];
-//           });
-//       });
-//     },
-//     userInfoMethods.getUserInfo()._id,
-    
-//     (liked) => {
-//       if (liked) {
-//         api.removeLike(item._id);
-//         return false;
-//       } else {
-//         api.addLike(item._id);
-//         return true;
-//       }
-//     },
-
-//     ".card-template"
-//   );
-//   return cardElement.generateCard(myCard);
-// }
-
 
 function createCard(item, myCard = false) {
   const cardElement = new Card(
@@ -239,18 +145,6 @@ function createCard(item, myCard = false) {
       });
     },
     userInfoMethods.getUserInfo()._id,
-    
-    // (liked) => {
-    //   if (liked) {
-    //     api.removeLike(item._id);
-    //     return false;
-    //   } else {
-    //     api.addLike(item._id);
-    //     return true;
-    //   }
-    // },
-
-
     () => {
       const likeStatus = cardElement.isLiked();
       api.changeLikeCardStatus(item._id, likeStatus)
@@ -262,7 +156,6 @@ function createCard(item, myCard = false) {
         return [];
       });
     },
-
     ".card-template"
   );
   return cardElement.generateCard(myCard);
@@ -274,18 +167,6 @@ const userInfoMethods = new UserInfo(
   ".profile", ".profile__avatar",
   () => {}
 );
-
-api.getUserInfo()
-  .then((res) => {
-    userInfoMethods.setUserInfo(res.name, res.about, res.avatar, res._id);
-    userInfoMethods.setUserAvatar(res.avatar);
- 
-  })
-  .catch((err) => {
-    console.log(err);
-    return [];
-  })
- 
 
 /*Добавление слушателей */
 openedAddCardForm.setEventListeners();
@@ -331,11 +212,15 @@ editProfileFormValidator.enableValidation();
 
 Promise.all([api.getUserInfo(), api.getInitialCards()]).then(
   ([res, initialCards]) => {
-    userInfoMethods.setUserInfo(res.name, res.about, res.avatar, res._id);
+    userInfoMethods.setUserInfo(res.name, res.about);
+    userInfoMethods.setUserInfos(res.avatar, res._id)
     userInfoMethods.setUserAvatar(res.avatar);
     initialCards.forEach((item) => {
       cardList.addItem(createCard(item));
     });
   }
-);
+) .catch((err) => {
+  console.log(err);
+  return [];
+}) 
 

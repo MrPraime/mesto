@@ -19,7 +19,8 @@ export class Api {
      
   }
 
-  patchUserInfo(name, about) {
+  patchUserInfo(name, about, loading) {
+    loading(true); 
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -42,7 +43,7 @@ export class Api {
 
   }
 
-  postNewCard(name, link) {
+  postNewCard(name, link, loading) {
     loading(true);
     return fetch(`${this._url}/cards `, {
       method: "POST",
@@ -66,7 +67,8 @@ export class Api {
      
   }
 
-  patchNewAvatar(avatarUrl) {
+  patchNewAvatar(avatarUrl, loading) {
+    loading(true)
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
@@ -75,27 +77,8 @@ export class Api {
         avatar: avatarUrl,
       }),
     })
-    .then(this._checkResponse)
-     
+    .then(this._checkResponse)     
   }
-
-  // addLike(id) {
-  //   return fetch(`${this._url}/cards/likes/${id}`, {
-  //     method: "PUT",
-  //     headers: this._headers,
-  //   })
-  //   .then(this._checkResponse)
-
-  // }
-
-  // removeLike(id) {
-  //   return fetch(`${this._url}/cards/likes/${id}`, {
-  //     method: "DELETE",
-  //     headers: this._headers,
-  //   })
-  //   .then(this._checkResponse);
-
-  // }
 
 
   changeLikeCardStatus(id,like){
@@ -103,6 +86,7 @@ export class Api {
       method: like ? 'DELETE' : 'PUT',
       headers: this._headers,
     })
+    .then(this._checkResponse); 
 
   }
 

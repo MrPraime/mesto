@@ -1,27 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export class Card {
 	constructor({data, handleCardClick}, handleDeleteConfirm, currentUserId, handleLikeClick, cardSelector) {
 		this._name = data.name;
@@ -37,9 +14,6 @@ export class Card {
 		this._handleLikeClick = handleLikeClick.bind(this);
 		this.setLikesInfo = this.setLikesInfo.bind(this);
 		
-		// this._liked = data.likes.some((item) => {
-		//   return item.name === this._currentUserId;
-		// });
 		this._toggleLike = this._toggleLike.bind(this);
 		
 }
@@ -65,6 +39,7 @@ generateCard(myCard) {
 	
 	this._setEventListeners();
 	const statusLikeNewCard = this.isLiked();
+	
     this.setLikesInfo(this._likes, !statusLikeNewCard);
 
 
@@ -118,14 +93,11 @@ setLikesInfo(likes, status) {
     }
 	this._element.querySelector('.element__numberLikes').textContent = likes.length;
 
+
     this._likes = likes;
+
   }
   
-
-
-
-
-
 
   _toggleLike(evt) {
     this._handleLikeClick(evt.target, this._card_id);

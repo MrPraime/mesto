@@ -22,14 +22,14 @@ export class PopupWithForm extends Popup {
   }
 
   loading(wait) {
-    const btnText = this._submitBtn.textContent;
+  const btnText = this._submitBtn.textContent;
 
-    if (wait) {
-      this._submitBtn.textContent += "...";
-    } else {
-      this._submitBtn.textContent = btnText.slice(0, btnText.length - 3);
-    }
+  if (wait) {
+    this._submitBtn.textContent += "...";
+  } else {
+    this._submitBtn.textContent = btnText.slice(0, btnText.length - 3);
   }
+}
 
   setEventListeners() {
     super.setEventListeners();
