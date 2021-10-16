@@ -21,8 +21,7 @@ export default class UserInfo {
 
     }
 
-    setUserInfos( avatarUrl, _id) {
-        this._profileAvatar.src = avatarUrl;
+    setUserInfoId( _id) {
         this._userID = _id;
 
     }

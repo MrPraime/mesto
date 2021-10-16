@@ -39,19 +39,39 @@ const api = new Api({
 const cardList = new Section({
   items: [],
   renderer: (item) => {
-      const postElement = newCard(item);
+    const postElement = createCard(item);
       cardList.addItem(postElement);
   }
 },  cardListSelector);
 
 
 /* открытие попАпов */
+// const openedProfileForm = new PopupWithForm(
+//   ".popup_edit-form",
+//   ({ name, about }) => {
+//     api.patchUserInfo(name, about, (wait) => {
+//         handleWaitLoading(openedProfileForm, wait);
+//       })
+//       .then(() => {
+//         userInfoMethods.setUserInfo(name, about), 
+//         openedProfileForm.close();
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         return [];
+//       })
+//       .finally((wait) => {
+//         handleWaitLoading(openedProfileForm, wait)
+//       });
+//   }
+// );
+
+
 const openedProfileForm = new PopupWithForm(
   ".popup_edit-form",
   ({ name, about }) => {
-    api.patchUserInfo(name, about, (wait) => {
-        handleWaitLoading(openedProfileForm, wait);
-      })
+    openedProfileForm.renderLoadingSave(true);
+    api.patchUserInfo(name, about, )
       .then(() => {
         userInfoMethods.setUserInfo(name, about), 
         openedProfileForm.close();
@@ -60,18 +80,22 @@ const openedProfileForm = new PopupWithForm(
         console.log(err);
         return [];
       })
-      .finally((wait) => {
-        handleWaitLoading(openedProfileForm, wait)
+      .finally(() => {
+        openedProfileForm.renderLoadingSave(false);
       });
   }
 );
 
+
+
+
+
+
 const openedAddCardForm = new PopupWithForm(
   ".popup_new-item-form",
   ({ title, imageUrl }) => {
-    api.postNewCard(title, imageUrl, (wait) => {
-        handleWaitLoading(openedAddCardForm, wait);
-      })
+    openedAddCardForm.renderLoadingCreate(true)
+    api.postNewCard(title, imageUrl,)
       .then((res) => {
         elements.prepend(createCard(res))
         addFormValidator.handleSubmitBtnDisabled()
@@ -81,18 +105,38 @@ const openedAddCardForm = new PopupWithForm(
         console.log(err);
         return [];
       })
-      .finally((wait) => {
-        handleWaitLoading(openedEditAvatarForm, wait)
+      .finally(() => {
+        openedAddCardForm. renderLoadingCreate(false);
       });
   }
 );
 
+// const openedEditAvatarForm = new PopupWithForm(
+//   ".popup_edit-avatar",
+//   ({ newAvatarUrl }) => {
+//     api.patchNewAvatar(newAvatarUrl, (wait) => {
+//       handleWaitLoading(openedEditAvatarForm, wait)
+//       })
+//       .then(() => {
+//         userInfoMethods.setUserAvatar(newAvatarUrl);
+//         editProfileAvatarformFormValidator.handleSubmitBtnDisabled();
+//         openedEditAvatarForm.close();
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         return [];
+//       }).finally((wait) => {
+//         handleWaitLoading(openedEditAvatarForm, wait)
+//       });
+//   }
+// );
+
+
 const openedEditAvatarForm = new PopupWithForm(
   ".popup_edit-avatar",
   ({ newAvatarUrl }) => {
-    api.patchNewAvatar(newAvatarUrl, (wait) => {
-      handleWaitLoading(openedEditAvatarForm, wait)
-      })
+    openedEditAvatarForm.renderLoadingSave(true);
+    api.patchNewAvatar(newAvatarUrl)
       .then(() => {
         userInfoMethods.setUserAvatar(newAvatarUrl);
         editProfileAvatarformFormValidator.handleSubmitBtnDisabled();
@@ -101,8 +145,8 @@ const openedEditAvatarForm = new PopupWithForm(
       .catch((err) => {
         console.log(err);
         return [];
-      }).finally((wait) => {
-        handleWaitLoading(openedEditAvatarForm, wait)
+      }).finally(() => {
+        openedEditAvatarForm.renderLoadingSave(false);
       });
   }
 );
@@ -213,11 +257,9 @@ editProfileFormValidator.enableValidation();
 Promise.all([api.getUserInfo(), api.getInitialCards()]).then(
   ([res, initialCards]) => {
     userInfoMethods.setUserInfo(res.name, res.about);
-    userInfoMethods.setUserInfos(res.avatar, res._id)
+    userInfoMethods.setUserInfoId(res._id)
     userInfoMethods.setUserAvatar(res.avatar);
-    initialCards.forEach((item) => {
-      cardList.addItem(createCard(item));
-    });
+    cardList.renderItems(initialCards)
   }
 ) .catch((err) => {
   console.log(err);

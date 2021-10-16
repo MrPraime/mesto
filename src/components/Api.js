@@ -19,8 +19,8 @@ export class Api {
      
   }
 
-  patchUserInfo(name, about, loading) {
-    loading(true); 
+  patchUserInfo(name, about) {
+    // loading(true); 
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -43,8 +43,7 @@ export class Api {
 
   }
 
-  postNewCard(name, link, loading) {
-    loading(true);
+  postNewCard(name, link) {
     return fetch(`${this._url}/cards `, {
       method: "POST",
       headers: this._headers,
@@ -67,8 +66,7 @@ export class Api {
      
   }
 
-  patchNewAvatar(avatarUrl, loading) {
-    loading(true)
+  patchNewAvatar(avatarUrl) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
